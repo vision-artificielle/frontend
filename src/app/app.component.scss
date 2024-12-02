@@ -1,0 +1,27 @@
+/* Main layout container */
+.layout {
+    display: flex; /* Arrange children in a row */
+    width: 100%; /* Full width of the viewport */
+    height: 100vh; /* Full height of the viewport */
+  }
+  
+  /* Sidebar (Fixed Width) */
+  .sidebar {
+    // width: 260px; /* Fixed width for the sidebar */
+    height: 100%; /* Full height of the viewport */
+    position: fixed; /* Make the sidebar fixed */
+    top: 0;
+    left: 0;
+
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+  }
+  
+  /* Main Content (Flexible Width) */
+  .main-content {
+    margin-left: 150px; /* Offset by the sidebar width */
+    flex: 1; /* Flexible to take up the remaining space */
+    padding: 20px; /* Add some padding for spacing */
+    background-color: #ecf0f1; /* Optional: Add a background color */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+  }
+  
