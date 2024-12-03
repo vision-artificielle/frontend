@@ -1,1 +1,31 @@
-<p>noise works!</p>
+<div class="upload-container">
+    <h2>Image Noise Application</h2>
+  
+    <!-- File Upload -->
+    <div>
+      <label for="fileInput" class="upload-label">Choose an Image</label>
+      <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" hidden />
+      <button class="upload-btn" (click)="triggerFileInput()">Upload Image</button>
+    </div>
+  
+    <!-- Preview -->
+    <div *ngIf="previewUrl" class="image-preview">
+      <img [src]="previewUrl" alt="Uploaded Image" />
+    </div>
+    <div *ngIf="noisyImage">
+        <h3>Processed Image:</h3>
+        <img [src]="noisyImage" alt="Noisy Image" />
+      </div>
+      
+  
+    <!-- Noise Level Selection -->
+    <div *ngIf="previewUrl"class="noise-selector">
+      <label for="noiseLevel">Select Noise Level:</label>
+      <input type="range" id="noiseLevel" [(ngModel)]="noiseLevel" min="0" max="100" />
+      <span>{{ noiseLevel }}%</span>
+    </div>
+  
+    <!-- Submit Button -->
+    <button *ngIf="previewUrl" class="apply-noise-btn" (click)="applyNoise()">Apply Noise</button>
+  </div>
+  
