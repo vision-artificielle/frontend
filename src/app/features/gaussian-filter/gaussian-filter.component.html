@@ -1,27 +1,45 @@
 <div class="opencv-container">
-    <h2>OpenCV Denoising</h2>
-    
-    <!-- Upload Image -->
-    <div class="upload-section">
-      <label for="imageUpload">Upload Image:</label>
-      <input type="file" id="imageUpload" (change)="onFileSelected($event)" />
-    </div>
-  
-    <!-- Preview Uploaded Image -->
-    <div class="preview-section" *ngIf="previewUrl">
-      <h3>Preview:</h3>
-      <img [src]="previewUrl" alt="Selected Image" class="image-preview" />
-    </div>
-  
-    <!-- Denoise Button -->
-    <button class="denoise-button" (click)="denoiseImage()" [disabled]="isLoading">
-      {{ isLoading ? 'Processing...' : 'Denoise Image' }}
+  <h2>Gaussian Filter Denoising</h2>
+
+  <!-- Upload Image -->
+  <div class="upload-section">
+    <label for="imageUpload">Upload Image:</label>
+    <input type="file" id="imageUpload" (change)="onFileSelected($event)" />
+  </div>
+
+  <!-- Preview Uploaded Image -->
+  <div class="preview-section" *ngIf="previewUrl">
+    <h3>Preview:</h3>
+    <img [src]="previewUrl" alt="Selected Image" class="image-preview" />
+  </div>
+
+  <!-- Buttons -->
+  <div class="button-section">
+    <button 
+      class="denoise-button" 
+      (click)="denoiseImageFromScratch()" 
+      [disabled]="isProcessingScratch">
+      {{ isProcessingScratch ? 'Processing Scratch...' : 'Denoise From Scratch' }}
     </button>
-  
-    <!-- Denoised Image -->
-    <div class="result-section" *ngIf="denoisedImageUrl">
-      <h3>Denoised Image:</h3>
-      <img [src]="denoisedImageUrl" alt="Denoised Image" class="image-preview" />
+
+    <button 
+      class="denoise-button" 
+      (click)="denoiseImagePredefined()" 
+      [disabled]="isProcessingPredefined">
+      {{ isProcessingPredefined ? 'Processing Predefined...' : 'Denoise Predefined' }}
+    </button>
+  </div>
+
+  <!-- Denoised Images -->
+  <div class="result-section">
+    <div class="result" *ngIf="denoisedImageScratchUrl">
+      <h3>Denoised Image (From Scratch):</h3>
+      <img [src]="denoisedImageScratchUrl" alt="Denoised Image (From Scratch)" class="image-preview" />
     </div>
+
+    <div class="result" *ngIf="denoisedImagePredefinedUrl">
+      <h3>Denoised Image (Predefined):</h3>
+      <img [src]="denoisedImagePredefinedUrl" alt="Denoised Image (Predefined)" class="image-preview" />
+    </div>
+  </div>
 </div>
-  

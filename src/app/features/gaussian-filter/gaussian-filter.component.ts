@@ -7,13 +7,15 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './gaussian-filter.component.html',
-  styleUrl: './gaussian-filter.component.scss'
+  styleUrls: ['./gaussian-filter.component.scss']
 })
 export class GaussianFilterComponent {
   selectedFile!: File;
   previewUrl: string | ArrayBuffer | null = null;
-  denoisedImageUrl: string | null = null;
-  isLoading = false;
+  denoisedImageScratchUrl: string | null = null;
+  denoisedImagePredefinedUrl: string | null = null;
+  isProcessingScratch = false;
+  isProcessingPredefined = false;
 
   constructor(private http: HttpClient) {}
 
@@ -30,27 +32,52 @@ export class GaussianFilterComponent {
     }
   }
 
-  // Send the file to the backend
-  denoiseImage(): void {
+  // Send the file to the backend (for gaussian_from_scratch)
+  denoiseImageFromScratch(): void {
     if (!this.selectedFile) {
       alert('Please select an image!');
       return;
     }
 
-    this.isLoading = true;
+    this.isProcessingScratch = true;
+    const formData = new FormData();
+    formData.append('image', this.selectedFile);
+
+    this.http.post('http://127.0.0.1:5000/gaussian_from_scratch', formData, { responseType: 'blob' }).subscribe({
+      next: (response) => {
+        const objectURL = URL.createObjectURL(response);
+        this.denoisedImageScratchUrl = objectURL;
+        this.isProcessingScratch = false;
+      },
+      error: (error) => {
+        console.error('Error during the request:', error);
+        alert('Something went wrong with "From Scratch" processing!');
+        this.isProcessingScratch = false;
+      },
+    });
+  }
+
+  // Send the file to the backend (for gaussian_predefined)
+  denoiseImagePredefined(): void {
+    if (!this.selectedFile) {
+      alert('Please select an image!');
+      return;
+    }
+
+    this.isProcessingPredefined = true;
     const formData = new FormData();
     formData.append('image', this.selectedFile);
 
     this.http.post('http://127.0.0.1:5000/gaussian_predefined', formData, { responseType: 'blob' }).subscribe({
       next: (response) => {
         const objectURL = URL.createObjectURL(response);
-        this.denoisedImageUrl = objectURL;
-        this.isLoading = false;
+        this.denoisedImagePredefinedUrl = objectURL;
+        this.isProcessingPredefined = false;
       },
       error: (error) => {
         console.error('Error during the request:', error);
-        alert('Something went wrong!');
-        this.isLoading = false;
+        alert('Something went wrong with "Predefined" processing!');
+        this.isProcessingPredefined = false;
       },
     });
   }
