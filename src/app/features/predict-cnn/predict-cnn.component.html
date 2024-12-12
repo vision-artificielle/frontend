@@ -1,27 +1,33 @@
 <div class="opencv-container">
-    <h2>CNN Denoising</h2>
-    
-    <!-- Upload Image -->
-    <div class="upload-section">
-      <label for="imageUpload">Upload Image:</label>
-      <input type="file" id="imageUpload" (change)="onFileSelected($event)" />
-    </div>
-  
-    <!-- Preview Uploaded Image -->
-    <div class="preview-section" *ngIf="previewUrl">
-      <h3>Preview:</h3>
+  <h2>CNN Denoising</h2>
+
+  <!-- Loader -->
+  <app-loader *ngIf="isLoading"></app-loader>
+
+  <!-- Upload Section -->
+  <div class="upload-section">
+    <label for="imageUpload">Upload Image:</label>
+    <input type="file" id="imageUpload" (change)="onFileSelected($event)" />
+  </div>
+
+  <!-- Image Display Section -->
+  <div class="image-section" *ngIf="previewUrl || denoisedImageUrl">
+    <div class="image-container" *ngIf="previewUrl">
+      <h3>Original Image:</h3>
       <img [src]="previewUrl" alt="Selected Image" class="image-preview" />
     </div>
-  
-    <!-- Denoise Button -->
-    <button class="denoise-button" (click)="denoiseImage()" [disabled]="isLoading">
-      {{ isLoading ? 'Processing...' : 'Denoise Image' }}
-    </button>
-  
-    <!-- Denoised Image -->
-    <div class="result-section" *ngIf="denoisedImageUrl">
+    <div class="image-container" *ngIf="denoisedImageUrl">
       <h3>Denoised Image:</h3>
       <img [src]="denoisedImageUrl" alt="Denoised Image" class="image-preview" />
     </div>
+  </div>
+
+  <!-- Denoise Button -->
+  <button
+    class="denoise-button"
+    (click)="denoiseImage()"
+    [disabled]="isLoading"
+  >
+    {{ isLoading ? 'Processing...' : 'Denoise Image' }}
+  </button>
 </div>
-  

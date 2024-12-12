@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { LoaderComponent } from "../../components/loader/loader.component";
 
 @Component({
   selector: 'app-opencv',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent],
   templateUrl: './opencv.component.html',
   styleUrl: './opencv.component.scss'
 })

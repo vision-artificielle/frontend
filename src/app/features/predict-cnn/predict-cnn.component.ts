@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { LoaderComponent } from "../../components/loader/loader.component";
 
 @Component({
   selector: 'app-predict-cnn',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoaderComponent],
   templateUrl: './predict-cnn.component.html',
   styleUrl: './predict-cnn.component.scss'
 })
